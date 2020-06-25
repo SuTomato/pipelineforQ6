@@ -1,0 +1,9 @@
+# Create fasta index files for ref genome
+module load samtools
+samtools faidx S_lycopersicum_chromosomes.4.00.fa
+
+# Create fasta dictionary file for ref genome
+java -jar picard.jar CreateSequenceDictionary R=S_lycopersicum_chromosomes.4.00.fa O=S_lycopersicum_chromosomes.4.00.dict
+
+## Call variants 
+gatk HaplotypeCaller -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -O raw_variants.vcf
