@@ -1,0 +1,26 @@
+## Filter 
+# SNPs
+gatk VariantFiltration -R S_lycopersicum_chromosomes.4.00.fa -V raw_snps.vcf -O filtered_snps.vcf -filter-name "QD_filter" -filter "QD < 2.0" -filter-name "FS_filter" -filter "FS > 60.0" -filter-name "MQ_filter" -filter "MQ < 40.0" -filter-name "SOR_filter" -filter "SOR > 4.0" -filter-name "MQRankSum_filter" -filter "MQRankSum < -12.5" -filter-name "ReadPosRankSum_filter" -filter "ReadPosRankSum < -8.0"
+# Indels
+gatk VariantFiltration -R S_lycopersicum_chromosomes.4.00.fa -V raw_indels.vcf -O filtered_indels.vcf -filter-name "QD_filter" -filter "QD < 2.0" -filter-name "FS_filter" -filter "FS > 200.0" -filter-name "SOR_filter" -filter "SOR > 10.0"
+
+## Exclude filtered variants 
+# SNPs
+gatk SelectVariants --exclude-filtered -V filtered_snps.vcf -O bqsr_snps.vcf
+# Indels
+gatk SelectVariants --exclude-filtered -V filtered_indels.vcf -O bqsr_indels.vcf
+
+## Base Quality Score Recalibration (BQSR)
+# First calibration 
+gatk BaseRecalibrator -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam --known-sites bqsr_snps.vcf --known-sites bqsr_indels.vcf -O recal_data.table
+# Apply 
+gatk ApplyBQSR -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -bqsr recal_data.table -O recal_reads.bam
+# Second Calibration
+gatk BaseRecalibrator -R S_lycopersicum_chromosomes.4.00.fa -I recal_reads.bam --known-sites bqsr_snps.vcf --known-sites bqsr_indels.vcf -O recal_data.table
+# Covariates
+gatk AnalyzeCovariates -before recal_data.table -after post_recal_data.table -plots recalibration_plots.pdf
+
+## Recall variants
+gatk HaplotypeCaller -R ref.fa -I recal_reads.bam -O raw_variants_recal.vcf
+
+## Repeat filter... https://gencore.bio.nyu.edu/variant-calling-pipeline-gatk4/
