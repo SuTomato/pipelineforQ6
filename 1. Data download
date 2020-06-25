@@ -16,8 +16,8 @@ fasterq-dump SRR1068458
 prefetch SRR1068458
 prefetch SRR1068459
 # Inside the SRR directories 
-fasterq-dump --split-files SRR1068458
-fasterq-dump --split-files SRR1068458
+fasterq-dump --split-files SRR1068458.sra
+fasterq-dump --split-files SRR1068458.sra
 
 ## Downloading tomato reference sequence
 wget ftp://ftp.solgenomics.net/tomato_genome/assembly/build_4.00/S_lycopersicum_chromosomes.4.00.fa
