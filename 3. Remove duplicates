@@ -1,0 +1,18 @@
+# Install Picard
+wget https://github.com/broadinstitute/picard/releases/download/2.23.1/picard.jar
+java -jar picard.jar
+
+# Collect alignment size matrix
+java -jar picard.jar CollectAlignmentSummaryMetrics R=S_lycopersicum_chromosomes.4.00.fa I=arcanum.bam O=alignment_metrics.txt
+java -jar picard.jar CollectInsertSizeMetrics INPUT=arcanum.bam OUTPUT=insert_metrics.txt HISTOGRAM_FILE=insert_size_histogram.pdf
+# WARNING: CollectInsertSizeMetrics  All data categories were discarded because they contained < 0.05 of the total aligned paired data.
+# WARNING: CollectInsertSizeMetrics  Total mapped pairs in all categories: 0.0
+
+module load samtools
+samtools depth -a arcanum.bam > depth_out.txt
+
+# Mark duplicates
+java -jar picard.jar MarkDuplicates INPUT=arcanum.bam OUTPUT=dedup_arcanum.bam METRICS_FILE=metrics.txt
+
+# Build bam index
+java -jar picard.jar BuildBamIndex INPUT=dedup_arcanum.bam
