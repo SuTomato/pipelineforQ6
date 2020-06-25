@@ -1,4 +1,4 @@
-## Download sra-tools for data downloading 
+## Download sra-tools for data downloading in SRA
 
 wget https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.10.7/sratoolkit.2.10.7-ubuntu64.tar.gz
 tar -xvzf sratoolkit.2.10.7-ubuntu64.tar.gz
@@ -12,7 +12,10 @@ tar -xvzf sratoolkit.2.10.7-ubuntu64.tar.gz
 export PATH=$PATH:$PWD/sratoolkit.2.10.7-ubuntu64/bin
 fasterq-dump SRR1068458
 
-## Downloading data
+## Downloading SRA data
 prefetch SRR1068458
+
+## Downloading tomato reference sequence
+wget ftp://ftp.solgenomics.net/tomato_genome/assembly/build_4.00/S_lycopersicum_chromosomes.4.00.fa
 
 # The data is now succesfully downloaded in the repository
