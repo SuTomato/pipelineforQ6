@@ -11,8 +11,10 @@ java -jar picard.jar CollectInsertSizeMetrics INPUT=arcanum.bam OUTPUT=insert_me
 module load samtools
 samtools depth -a arcanum.bam > depth_out.txt
 
-# Mark duplicates
+# Remove duplicates
 java -jar picard.jar MarkDuplicates INPUT=arcanum.bam OUTPUT=dedup_arcanum.bam METRICS_FILE=metrics.txt
+# Alternative way: gatk MarkDuplicatesSpark -I arcanum.bam -O dedup_arcanum.bam -M dedup.metrics.txt
 
 # Build bam index
-java -jar picard.jar BuildBamIndex INPUT=dedup_arcanum.bam
+java -jar picard.jar BuildBamIndex INPUT=dedup_arcanum.bam 
+
