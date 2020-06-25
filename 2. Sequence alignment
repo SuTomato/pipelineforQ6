@@ -5,7 +5,7 @@ R
 library(Rsubread)
 setwd("/fs/scratch/PAS1557/subode/trial")
 buildindex(basename="SL4.0", reference="S_lycopersicum_chromosomes.4.00.fa", memory=100000)
-align(index="/fs/scratch/PAS1557/subode/trial/arcanum", readfile1="SRR1068458.sra.fastq", readfile2="SRR1068459.sra.fastq", input_format="FASTQ", output_format="BAM", type="dna", output_file="arcanum.BAM", nsubreads=14, maxMismatches=5, nthreads=20, phredOffset=33, unique=TRUE, indels=50, minFragLength=50, maxFragLength=600, PE_orientation="fr", nTrim5=0, nTrim3=0, readGroupID=NULL, readGroup=NULL, color2base=FALSE, DP_GapOpenPenalty=-1, DP_GapExtPenalty=0, DP_MismatchPenalty=0, DP_MatchScore=2)
+align(index="/fs/scratch/PAS1557/subode/trial/SL4.0", readfile1="SRR1068458.sra.fastq", readfile2="SRR1068459.sra.fastq", input_format="FASTQ", output_format="BAM", type="dna", output_file="arcanum.BAM", nsubreads=14, maxMismatches=5, nthreads=20, phredOffset=33, unique=TRUE, indels=50, minFragLength=50, maxFragLength=600, PE_orientation="fr", nTrim5=0, nTrim3=0, readGroupID=NULL, readGroup=NULL, color2base=FALSE, DP_GapOpenPenalty=-1, DP_GapExtPenalty=0, DP_MismatchPenalty=0, DP_MatchScore=2)
 
 
 ## An alternative approaches using BWA align only SRR1068458 
@@ -16,6 +16,7 @@ align(index="/fs/scratch/PAS1557/subode/trial/arcanum", readfile1="SRR1068458.sr
 module load bwa
 module load samtools
 bwa index S_lycopersicum_chromosomes.4.00.fa
-bwa mem -t 28 /fs/scratch/PAS1557/subode/trial/S_lycopersicum_chromosomes.4.00.fa /fs/scratch/PAS1557/subode/trial/SRR1068458.sra.fastq | samtools sort -@8 -o arcanum.bam -
+bwa mem -t 28 /fs/scratch/PAS1557/subode/trial/S_lycopersicum_chromosomes.4.00.fa /fs/scratch/PAS1557/subode/trial/SRR1068458.sra.fastq | samtools sort -@8 -o arcanum2.bam -
+
 # Indexing the BAM file
 samtools index arcanum.bam arcanum.bai
