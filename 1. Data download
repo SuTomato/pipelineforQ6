@@ -5,6 +5,7 @@ tar -xvzf sratoolkit.2.10.7-ubuntu64.tar.gz
 
 # Go the bin directory
 ./vdb-config -i
+
 # Type a, r, s, o, x. 
 # Detailed guide please see: https://trace.ncbi.nlm.nih.gov/Traces/sra/sra.cgi?view=toolkit_doc&f=std and https://www.ncbi.nlm.nih.gov/sra/docs/sradownload/ 
 
@@ -12,7 +13,6 @@ export PATH=$PATH:$PWD/sratoolkit.2.10.7-ubuntu64/bin
 fasterq-dump SRR1068458
 
 ## Downloading data
-
 prefetch SRR1068458
 
 # The data is now succesfully downloaded in the repository
