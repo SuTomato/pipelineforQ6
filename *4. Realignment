@@ -1,0 +1,20 @@
+## Download GATK
+git clone https://github.com/broadinstitute/gatk.git
+# Misisng file for building 
+wget https://github.com/broadinstitute/gatk/blob/master/testsettings.gradle
+./gradlew bundle
+# The downloaded file was not in the right format
+# Code was manually copy and pasted from github, and finally worked 
+
+
+wget https://github.com/broadgsa/gatk/archive/3.8-1.tar.gz
+
+# Create realignment target
+java -jar GenomeAnalysisTK.jar -T RealignerTargetCreator -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -o realignment_targets.list 
+# No GenomeAnalysisTK.jar file
+gatk RealignerTargetCreator -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -o realignment_targets.list
+gatk --java-options "-Xmx4G" RealignerTargetCreator -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -o realignment_targets.list
+# The RealignerTargetCreator is no longer avaliable in gatk4
+
+## I tried to (1) download gatk3 but haveing trouble building the files
+## (2) looking for gatk4 codes, skip this step
