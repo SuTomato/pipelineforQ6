@@ -14,8 +14,9 @@ fasterq-dump SRR1068458
 
 ## Downloading SRA data
 prefetch SRR1068458
-fasterq-dump --split-files SRR1068458
 prefetch SRR1068459
+# Inside the SRR directories 
+fasterq-dump --split-files SRR1068458
 fasterq-dump --split-files SRR1068458
 
 ## Downloading tomato reference sequence
