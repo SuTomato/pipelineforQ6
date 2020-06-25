@@ -13,8 +13,10 @@ export PATH=$PATH:$PWD/sratoolkit.2.10.7-ubuntu64/bin
 fasterq-dump SRR1068458
 
 ## Downloading SRA data
-prefetch --type fastq SRR1068458
-prefetch --type fastq SRR1068459
+prefetch SRR1068458
+fasterq-dump --split-files SRR1068458
+prefetch SRR1068459
+fasterq-dump --split-files SRR1068458
 
 ## Downloading tomato reference sequence
 wget ftp://ftp.solgenomics.net/tomato_genome/assembly/build_4.00/S_lycopersicum_chromosomes.4.00.fa
