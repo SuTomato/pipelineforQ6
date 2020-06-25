@@ -21,3 +21,4 @@ bwa mem -t 28 /fs/scratch/PAS1557/subode/trial/S_lycopersicum_chromosomes.4.00.f
 
 # Indexing the BAM file
 samtools index arcanum.bam arcanum.bai
+samtools view -h arcanum.bam arcanum.sam
