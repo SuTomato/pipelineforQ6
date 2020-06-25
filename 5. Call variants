@@ -7,3 +7,8 @@ java -jar picard.jar CreateSequenceDictionary R=S_lycopersicum_chromosomes.4.00.
 
 ## Call variants 
 gatk HaplotypeCaller -R S_lycopersicum_chromosomes.4.00.fa -I dedup_arcanum.bam -O raw_variants.vcf
+
+## Extract SNPs and Indels
+gatk SelectVariants -R S_lycopersicum_chromosomes.4.00.fa -V raw_variants.vcf -selectType SNP -O raw_snps.vcf
+gatk SelectVariants -R S_lycopersicum_chromosomes.4.00.fa -V raw_variants.vcf -selectType INDEL -O raw_indels.vcf
+
