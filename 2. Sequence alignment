@@ -1,0 +1,22 @@
+## Align using R subread for pair-end (??) sequence SRR1068458 and SRR1068459
+# Index the reference genome sequence
+module load R
+R
+library(Rsubread)
+setwd("/fs/scratch/PAS1557/subode/trial")
+buildindex(basename="SL4.0", reference="S_lycopersicum_chromosomes.4.00.fa", memory=100000)
+R CMD BATCH --quiet --no-restore --no-save ./SubreadIndex.R > arcanum.OUT
+align(index="/fs/scratch/PAS1557/subode/trial/arcanum", readfile1="SRR1068458.fastq", readfile2="SRR1068459.fastq", input_format="FASTQ", output_format="BAM", type="dna", output_file="arcanum.BAM", nsubreads=14, maxMismatches=5, nthreads=20, phredOffset=33, unique=TRUE, indels=50, minFragLength=50, maxFragLength=600, PE_orientation="fr", nTrim5=0, nTrim3=0, readGroupID=NULL, readGroup=NULL, color2base=FALSE, DP_GapOpenPenalty=-1, DP_GapExtPenalty=0, DP_MismatchPenalty=0, DP_MatchScore=2)
+
+
+## An alternative approaches using BWA align only SRR1068458 
+# I used this one in my date because this is expected to run faster to get the result. 
+# The Rsubread approach can be turned in as a job in OSC. I tried the Rsubread approach with my own data before and it took long hours. 
+# Rsubread is expected to give good quality, and and manually define mismatch allowed and fregment length etc. 
+
+module load bwa
+module load samtools
+bwa index S_lycopersicum_chromosomes.4.00.fa
+bwa mem -t 28 /fs/scratch/PAS1557/subode/trial/S_lycopersicum_chromosomes.4.00.fa /fs/scratch/PAS1557/subode/trial/SRR1068458.fastq | samtools sort -@8 -o arcanum.bam -
+# Indexing the BAM file
+samtools index arcanum.bam arcanum.bai
